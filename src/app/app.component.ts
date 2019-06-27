@@ -74,27 +74,31 @@ export class AppComponent implements OnInit, AfterViewInit {
 		this.mytimer = timer(1000, 1000)
 			.pipe(map(() => ++this.ittimer.sec))
 			.subscribe((i) => {
-				this.ittimer.sec = i;
-				if (this.ittimer.sec === 60) {
-					this.ittimer.sec = 0;
-					this.ittimer.min++;
-				}
-				if (this.ittimer.min === 60) {
-					this.ittimer.min = 0;
-					this.ittimer.hour++;
-				}
-				if(this.ittimer.hour == 24 && this.ittimer.min == 0 && this.ittimer.sec == 0) {
-					this.ittimer.hour = 0;
-					this.ittimer.min = 0;
-					this.ittimer.sec = 0;
-					this.stopButton = true;
-					this.startButton = false;
-					return this.mytimer.unsubscribe();
-				}
+				this.timeformat(i);
 				console.log(this.ittimer);
 			});
 
 
+	}
+
+	timeformat(i) {
+		this.ittimer.sec = i;
+		if (this.ittimer.sec === 60) {
+			this.ittimer.sec = 0;
+			this.ittimer.min++;
+		}
+		if (this.ittimer.min === 60) {
+			this.ittimer.min = 0;
+			this.ittimer.hour++;
+		}
+		if(this.ittimer.hour == 24 && this.ittimer.min == 0 && this.ittimer.sec == 0) {
+			this.ittimer.hour = 0;
+			this.ittimer.min = 0;
+			this.ittimer.sec = 0;
+			this.stopButton = true;
+			this.startButton = false;
+			return this.mytimer.unsubscribe();
+		}
 	}
 
 	stop() {
